@@ -2,6 +2,7 @@ package com.for_comprehension.reactor.l1_thread;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+// runs on Java 17
 class L1_ThreadStopExample {
 
     public static void main(String[] args) throws InterruptedException {
