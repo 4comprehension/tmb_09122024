@@ -23,14 +23,6 @@ class L4_ParallelCollectionProcessing {
                 tasks.add(future);
             }
 
-            tasks.forEach(f -> {
-                try {
-                    System.out.println("f.get() = " + f.get());
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
-
             List<Integer> results = tasks.stream()
               .map(f -> {
                   try {
@@ -44,6 +36,31 @@ class L4_ParallelCollectionProcessing {
         });
     }
 
+    record ParallelStreamsWithOutParallelStream() {
+        public static void main(String[] args) throws InterruptedException {
+            List<Integer> ints = Stream.iterate(0, i -> i + 1)
+              .limit(100)
+              .toList();
+
+            // process in parallel with max parallelism of 15
+            timed(() -> {
+                ExecutorService e = Executors.newFixedThreadPool(15);
+                List<Integer> results = ints.stream()
+                  .map(i -> e.submit(() -> process(i)))
+                  .toList()
+                  .stream()
+                  .map(f -> {
+                      try {
+                          return f.get();
+                      } catch (Exception ex) {
+                          throw new RuntimeException(ex);
+                      }
+                  }).toList();
+
+                System.out.println("results = " + results);
+            });
+        }
+    }
     static void timed(Runnable runnable) {
         long start = System.currentTimeMillis();
         runnable.run();
@@ -58,5 +75,20 @@ class L4_ParallelCollectionProcessing {
             throw new RuntimeException(e);
         }
         return input;
+    }
+
+    record Example() {
+        public static void main(String[] args) {
+            Stream.of(1,2,3,4)
+              .map(i -> i)
+              .map(i -> i)
+              .map(i -> i)
+              .map(i -> {
+                  System.out.println(i);
+                  return i;
+              })
+              .findFirst();
+
+        }
     }
 }
