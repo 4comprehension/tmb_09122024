@@ -1,4 +1,4 @@
-package com.for_comprehension.reactor.l4;
+package com.for_comprehension.reactor.l4_future;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
