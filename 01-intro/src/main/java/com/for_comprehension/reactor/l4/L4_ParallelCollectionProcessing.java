@@ -1,5 +1,6 @@
 package com.for_comprehension.reactor.l4;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,12 +17,29 @@ class L4_ParallelCollectionProcessing {
         // process in parallel with max parallelism of 15
         timed(() -> {
             ExecutorService e = Executors.newFixedThreadPool(15);
+            List<Future<Integer>> tasks = new ArrayList<>();
             for (Integer i : ints) {
                 Future<Integer> future = e.submit(() -> process(i));
-                // ...
+                tasks.add(future);
             }
 
-            List<Integer> results = null;
+            tasks.forEach(f -> {
+                try {
+                    System.out.println("f.get() = " + f.get());
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+
+            List<Integer> results = tasks.stream()
+              .map(f -> {
+                  try {
+                      return f.get();
+                  } catch (Exception ex) {
+                      throw new RuntimeException(ex);
+                  }
+              }).toList();
+
             System.out.println("results = " + results);
         });
     }
