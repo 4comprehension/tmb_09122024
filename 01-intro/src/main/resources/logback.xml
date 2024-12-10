@@ -1,6 +1,19 @@
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-
     <logger name="org" level="INFO"/>
 
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>myapp.log</file>
+        <encoder>
+            <pattern>%logger{35} -%kvp -%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--    This strategy has an amazingly favorable effect on performance at the cost of event loss. -->
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE"/>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="ASYNC"/>
+    </root>
 </configuration>

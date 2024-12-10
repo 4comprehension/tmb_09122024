@@ -1,4 +1,4 @@
-package l5_completable_future;
+package com.for_comprehension.reactor.l5_completable_future;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;

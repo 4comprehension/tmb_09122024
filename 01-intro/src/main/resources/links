@@ -4,3 +4,7 @@
 
 https://github.com/openjdk/jdk/blob/a606836a02bb3e4ff3e3aaad478fc7ac142b3e38/src/java.base/share/classes/java/lang/Shutdown.java#L194-L202
 https://github.com/openjdk/jdk/blob/a606836a02bb3e4ff3e3aaad478fc7ac142b3e38/src/hotspot/share/runtime/threads.cpp#L1105-L1111
+
+https://github.com/ben-manes/caffeine
+
+https://sumofbytes.com/blog/understanding-tcp-protocol-and-backpressure
