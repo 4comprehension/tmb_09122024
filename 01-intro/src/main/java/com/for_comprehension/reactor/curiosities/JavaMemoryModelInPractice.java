@@ -6,7 +6,6 @@ class JavaMemoryModelInPractice {
     private static boolean stopRequested;
 
     public static void main(String[] args) throws InterruptedException {
-
         Thread backgroundThread = new Thread(() -> {
             int i = 0;
             while (!stopRequested) {
@@ -19,7 +18,6 @@ class JavaMemoryModelInPractice {
         Thread.sleep(1000);
 
         stopRequested = true;
-
     }
 
     public static int add(int a, int b) {
